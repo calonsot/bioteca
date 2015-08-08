@@ -22,7 +22,6 @@ class JaniumService extends \SoapClient {
 	 * @var unknown
 	 */
 	public $debug = false;
-	public $ip = '200.12.166.51';
 	public $client;
 	
 	function __construct($debug = null, $ip = null) {
@@ -33,7 +32,7 @@ class JaniumService extends \SoapClient {
 		
 		if ($this->debug) {
 			$this->client = new SoapClient ( null, array (
-					'location' => "http://".$this->ip."/janium/services/soap.pl",
+					'location' => "http://halcon.conabio.gob.mx/janium/services/soap.pl",
 					'uri' => 'http://janium.net/services/soap',
 					'use' => SOAP_LITERAL,
 					'trace' => 1,
@@ -41,7 +40,7 @@ class JaniumService extends \SoapClient {
 			) );
 		} else {
 			$this->client = new SoapClient ( null, array (
-					'location' => "http://".$this->ip."/janium/services/soap.pl",
+					'location' => "http://halcon.conabio.gob.mx/janium/services/soap.pl",
 					'uri' => 'http://janium.net/services/soap',
 					'use' => SOAP_LITERAL 
 			) );
@@ -75,5 +74,13 @@ class JaniumService extends \SoapClient {
 	}
 }
 
-$client = new JaniumService();
-$client->callWs('RegistroBib/BuscarPorPalabraClaveGeneral', 'terminos', 'Maíces mexicanos');
+if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !empty($_GET['a']) && isset($_GET['v']) && !empty($_GET['v']))
+{
+	if (isset($_GET['debug']) && $_GET['debug'] == '1')
+		$client = new JaniumService(true);
+	else 
+		$client = new JaniumService();
+	
+	$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v']);
+} else
+	echo json_encode(array('status' => false, 'datos' => array()));
