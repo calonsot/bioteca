@@ -6,7 +6,7 @@
 
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
-header('Content-Type: text/json; charset=utf-8');
+//header('Content-Type: text/json; charset=utf-8');
 
 class JaniumRequestArg {
 	function JaniumRequestArg($a, $v) {
@@ -23,6 +23,7 @@ class JaniumService extends \SoapClient {
 	 */
 	public $debug = false;
 	public $client;
+	public $resultados;
 	
 	function __construct($debug = null, $ip = null) {
 		if (isset ( $debug ))
@@ -32,7 +33,7 @@ class JaniumService extends \SoapClient {
 		
 		if ($this->debug) {
 			$this->client = new SoapClient ( null, array (
-					'location' => "http://halcon.conabio.gob.mx/janium/services/soap.pl",
+					'location' => "http://200.12.166.51/janium/services/soap.pl",
 					'uri' => 'http://janium.net/services/soap',
 					'use' => SOAP_LITERAL,
 					'trace' => 1,
@@ -40,7 +41,7 @@ class JaniumService extends \SoapClient {
 			) );
 		} else {
 			$this->client = new SoapClient ( null, array (
-					'location' => "http://halcon.conabio.gob.mx/janium/services/soap.pl",
+					'location' => "http://200.12.166.51/janium/services/soap.pl",
 					'uri' => 'http://janium.net/services/soap',
 					'use' => SOAP_LITERAL 
 			) );
@@ -55,32 +56,62 @@ class JaniumService extends \SoapClient {
 				"LastResponse" => $this->client->__getLastResponse () 
 		) );
 	}
-	function callWs($metodo, $llave, $valor) {
+	function callWs($metodo, $llave, $valor, $numero_de_pagina = null) {
 		try {
-			$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"));
-			$response = array('status' => true, 'datos' => $response);
-			echo json_encode($response);
+			if (empty($numero_de_pagina))
+				$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"));
+			else  // Para cuando es mas de una pagina
+				$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"), new SoapParam(new JaniumRequestArg('numero_de_pagina', $numero_de_pagina), "arg"));
+			
+			$this->resultados = array('status' => true, 'datos' => $response);
 		} catch ( SOAPFault $e ) {
 			if ($this->debug)
 			{
 				var_dump ( $e );
 				soapDebug ( $client );
-			} else {
-				$response = array('status' => false, 'datos' => array());
-				echo json_encode($response);
-			}
-				
+			} else
+				$this->resultados = array('status' => false, 'datos' => array());
 		}
 	}
-}
-
-if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !empty($_GET['a']) && isset($_GET['v']) && !empty($_GET['v']))
-{
-	if (isset($_GET['debug']) && $_GET['debug'] == '1')
-		$client = new JaniumService(true);
-	else 
-		$client = new JaniumService();
 	
-	$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v']);
-} else
-	echo json_encode(array('status' => false, 'datos' => array()));
+	function iteraResultados()
+	{
+		if ($this->resultados['status'])  //status del webservice
+		{
+			$datos = $this->resultados['datos'];
+			
+			if ($datos['status'] == 'ok')  //status de la ficha, dio respuesta el webservice
+			{
+				$total_de_registros = (Int) $datos['total_de_registros'];
+				if ($total_de_registros > 0)
+				{
+					//Para armar el paginado
+					$registros_por_pagina = (Int) $datos['registros_por_pagina'];
+					$paginas = (Int) ($total_de_registros / $registros_por_pagina);  // castea a INT el resultado
+					$residuo = $total_de_registros % $registros_por_pagina;
+					
+					if ($residuo > 0)
+						$paginas+=1;
+					
+					echo "<pre>";
+					print_r($this->resultados);
+					echo "</pre>";
+					echo "<br>";
+					echo $paginas;
+				} else
+					echo "Sin resultados";
+		
+			} else
+				echo "Sin resultados";
+			
+		} else
+			echo "Sin resultados";			
+	}
+	
+	function muestraFicha()
+	{
+		echo "<pre>";
+		print_r($this->resultados);
+		echo "</pre>";
+	}
+}
