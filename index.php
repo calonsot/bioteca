@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 require 'JaniumService.php';
 
@@ -16,7 +16,14 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 	else
 		$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v']);
 	
-	//echo $client->iteraResultados();
-	echo $client->muestraFicha();
+	$fichas = $client->iteraResultados();
+	
+	foreach ($fichas as $ficha)
+	{
+		echo $ficha['clasificaciones'];
+		echo "<br>";
+		
+	}
+	//echo $client->muestraFicha();
 } else
 	echo json_encode(array('status' => false, 'datos' => array()));

@@ -1,6 +1,6 @@
 <?php
 /**
- * Debug para cuando falla el servicio
+ * Creado por Carlos Alonso, 10/08/2015
  * @param unknown $client
  */
 
@@ -24,6 +24,7 @@ class JaniumService extends \SoapClient {
 	public $debug = false;
 	public $client;
 	public $resultados;
+	public $valido = true;
 	
 	function __construct($debug = null, $ip = null) {
 		if (isset ( $debug ))
@@ -74,38 +75,93 @@ class JaniumService extends \SoapClient {
 		}
 	}
 	
-	function iteraResultados()
+	/**
+	 * Para ver si tiene o no resultados
+	 * @param string $resultados, booleano para saber si tiene informacion
+	 * @return multitype:boolean string |multitype:boolean
+	 */
+	function validacion($resultados = false)
 	{
 		if ($this->resultados['status'])  //status del webservice
 		{
 			$datos = $this->resultados['datos'];
-			
+				
 			if ($datos['status'] == 'ok')  //status de la ficha, dio respuesta el webservice
-			{
+			{		
 				$total_de_registros = (Int) $datos['total_de_registros'];
-				if ($total_de_registros > 0)
+				
+				if ($resultados)
 				{
-					//Para armar el paginado
-					$registros_por_pagina = (Int) $datos['registros_por_pagina'];
-					$paginas = (Int) ($total_de_registros / $registros_por_pagina);  // castea a INT el resultado
-					$residuo = $total_de_registros % $registros_por_pagina;
-					
-					if ($residuo > 0)
-						$paginas+=1;
-					
-					echo "<pre>";
-					print_r($this->resultados);
-					echo "</pre>";
-					echo "<br>";
-					echo $paginas;
+					if ($total_de_registros > 0)
+					{
+						return array("status" => true);
+					} else
+						return array("status" => false, "mensaje" => "Sin resultados");
 				} else
-					echo "Sin resultados";
-		
+					return array("status" => true);
+				
 			} else
-				echo "Sin resultados";
+				return array("status" => false, "mensaje" => "Sin resultados");
 			
 		} else
-			echo "Sin resultados";			
+			return array("status" => false, "mensaje" => "Sin resultados");
+	}
+	
+	function iteraResultados()
+	{
+		$validacion = $this->validacion(true);
+		
+		if ($validacion["status"])
+		{
+			$datos = $this->resultados['datos'];
+			$datos_array = array();
+				
+			foreach ($datos['registros']->registro as $ficha)
+			{
+				// Parte de clasificaciones 
+				$clasificaciones = '';
+				foreach ($ficha->clasificaciones as $clasificacion => $valor)
+					$clasificaciones.= $valor." ; ";
+				$clasificaciones = substr($clasificaciones, 0, -4);
+
+				// Parte de fecha
+				$fecha = $ficha->fecha;
+				
+				// Parte de titulos
+				$titulos = '';
+				foreach ($ficha->titulos as $titulo => $valor)
+					$titulos.= $valor." ; ";
+				$titulos = substr($titulos, 0, -4);
+				
+				// Parte de autores
+				$autores = '';
+				foreach ($ficha->autores as $autor => $valor)
+					$autores.= $valor." ; ";
+				$autores = substr($autores, 0, -4);
+				
+				// Parte de la URL
+				$url = $ficha->url;
+				
+				// Parte de numero de ficha
+				$ficha = $ficha->ficha;
+				
+				// Parte de portada
+				$portada_url = $ficha->portada->url;
+				$portada_url_asociada = $ficha->portada->url_asociada;
+				
+				// Empujandolo a $datos_array
+				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'fecha' => $fecha, 'titulos' => $titulos,
+				'autores' => $autores, 'url' => $url, '$ficha' => $ficha, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada));
+			}
+			/*
+			echo "<pre>";
+			print_r($this->resultados);
+			echo "</pre>";
+			*/
+			return $datos_array;
+			
+		} else
+			echo $validacion["mensaje"];			
 	}
 	
 	function muestraFicha()
@@ -113,5 +169,17 @@ class JaniumService extends \SoapClient {
 		echo "<pre>";
 		print_r($this->resultados);
 		echo "</pre>";
+	}
+	
+	function paginado()
+	{
+		$datos = $this->resultados['datos'];
+		$total_de_registros = (Int) $datos['total_de_registros'];
+		$registros_por_pagina = (Int) $datos['registros_por_pagina'];
+		$paginas = (Int) ($total_de_registros / $registros_por_pagina);  // castea a INT el resultado
+		$residuo = $total_de_registros % $registros_por_pagina;
+			
+		if ($residuo > 0)
+			$paginas+=1;
 	}
 }
