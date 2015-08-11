@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+.principal {
+	background-color: #F0FFFF;
+	width: 50%;
+	margin: 20px auto;
+}
+
+.info {
+	background-color: #F0FFFF;
+	width: 100%;
+	border-style: double;
+	border-width: 2px;
+	border-color: black;
+}
+
+.portada {
+	background-color: #F0FFFF;
+	width: 30%;
+	text-align: center;
+}
+
+.identar {
+	text-indent: 2em;
+	display: block;
+}
+
+.fecha {
+	text-align: right;
+	vertical-align: bottom;
+}

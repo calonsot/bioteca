@@ -120,30 +120,44 @@ class JaniumService extends \SoapClient {
 			{
 				// Parte de clasificaciones 
 				$clasificaciones = '';
-				foreach ($ficha->clasificaciones as $clasificacion => $valor)
-					$clasificaciones.= $valor." ; ";
-				$clasificaciones = substr($clasificaciones, 0, -4);
-
+				
+				if (is_array($ficha->clasificaciones->clasificacion))
+				{
+					foreach ($ficha->clasificaciones->clasificacion as $clasificacion => $valor)
+						$clasificaciones.= $valor." ; ";
+					$clasificaciones = substr($clasificaciones, 0, -3);
+				} else
+					$clasificaciones.= $ficha->clasificaciones->clasificacion;
+					 
 				// Parte de fecha
 				$fecha = $ficha->fecha;
 				
 				// Parte de titulos
 				$titulos = '';
-				foreach ($ficha->titulos as $titulo => $valor)
-					$titulos.= $valor." ; ";
-				$titulos = substr($titulos, 0, -4);
+				if (is_array($ficha->titulos->titulo))
+				{
+					foreach ($ficha->titulos->titulo as $titulo => $valor)
+						$titulos.= $valor." ; ";
+					$titulos = substr($titulos, 0, -3);
+				} else
+					$titulos.= $ficha->titulos->titulo;
 				
 				// Parte de autores
 				$autores = '';
-				foreach ($ficha->autores as $autor => $valor)
-					$autores.= $valor." ; ";
-				$autores = substr($autores, 0, -4);
+				
+				if (is_array($ficha->autores->autor))
+				{
+					foreach ($ficha->autores->autor as $autor => $valor)
+						$autores.= $valor." ; ";
+					$autores = substr($autores, 0, -3);
+				} else
+					$autores.= $ficha->autores->autor;
 				
 				// Parte de la URL
 				$url = $ficha->url;
 				
 				// Parte de numero de ficha
-				$ficha = $ficha->ficha;
+				$ficha_no = $ficha->ficha;
 				
 				// Parte de portada
 				$portada_url = $ficha->portada->url;
@@ -151,7 +165,7 @@ class JaniumService extends \SoapClient {
 				
 				// Empujandolo a $datos_array
 				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'fecha' => $fecha, 'titulos' => $titulos,
-				'autores' => $autores, 'url' => $url, '$ficha' => $ficha, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada));
+				'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada));
 			}
 			/*
 			echo "<pre>";
