@@ -62,7 +62,8 @@ class JaniumService extends \SoapClient {
 			if (empty($numero_de_pagina))
 				$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"));
 			else  // Para cuando es mas de una pagina
-				$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"), new SoapParam(new JaniumRequestArg('numero_de_pagina', $numero_de_pagina), "arg"));
+				$response = $this->client->JaniumRequest(new SoapParam($metodo, "method"), new SoapParam(new JaniumRequestArg($llave, $valor), "arg"), 
+						new SoapParam(new JaniumRequestArg('numero_de_pagina', $numero_de_pagina), "arg"));
 			
 			$this->resultados = array('status' => true, 'datos' => $response);
 		} catch ( SOAPFault $e ) {

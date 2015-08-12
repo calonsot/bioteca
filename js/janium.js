@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	$(document).on('click', "[id^='ficha_']", function(){
 	   var numero_ficha = $(this).attr('id').substring(6);
 	   var detalle_esta_vacio =  $('#detalle_' + numero_ficha).is(':empty');
@@ -32,5 +33,44 @@ $(document).ready(function() {
            $('#detalle_' + numero_ficha).hide();
 		   
 		   return false;
-	   	});
+	});
+	
+	
+	
+	// Parte del scrolling
+	
+	$(document).ready(function() {
+	    var loading  = false; //to prevents multipal ajax loads
+	    var total_groups =  //total record group(s)
+	    
+	    $(window).scroll(function() { //detect page scroll
+	        
+	        if($(window).scrollTop() + $(window).height() == $(document).height())  //user scrolled to bottom of the page?
+	        {
+	                loading = true; //prevent further ajax loading
+	                $('.animation_image').show(); //show loading image
+	                
+	                //load data from the server using a HTTP POST request
+	                $.post('resultados.php',{'metodo': 'RegistroBib/BuscarPorPalabraClaveGeneral', 'a': 'terminos', 'v': busqueda, 'numero_de_pagina': pagina.toString()}, function(data){
+	                      
+	                	if (data != "No existen datos para esta consulta")
+	                	{	
+	                		$("#resultados_paginado").append(data); //append received data into the element
+		                    pagina++; //loaded group increment
+	                	}	
+	                	
+	                	//hide loading image
+	                    $('.animation_image').hide(); //hide loading image once data is received
+	                    loading = false; 
+	                    	                
+	                }).fail(function(xhr, ajaxOptions, thrownError) { //any errors?
+	                    
+	                    alert(thrownError); //alert with HTTP error
+	                    $('.animation_image').hide(); //hide loading image
+	                    loading = false;
+	                
+	                });
+	        }
+	    });
+	});
 });
