@@ -96,15 +96,15 @@ class JaniumService extends \SoapClient {
 					{
 						return array("status" => true);
 					} else
-						return array("status" => false, "mensaje" => "Sin resultados");
+						return array("status" => false, "mensaje" => "No existen datos para esta consulta");
 				} else
 					return array("status" => true);
 				
 			} else
-				return array("status" => false, "mensaje" => "Sin resultados");
+				return array("status" => false, "mensaje" => "No existen datos para esta consulta");
 			
 		} else
-			return array("status" => false, "mensaje" => "Sin resultados");
+			return array("status" => false, "mensaje" => "No existen datos para esta consulta");
 	}
 	
 	function iteraResultados()
@@ -180,9 +180,76 @@ class JaniumService extends \SoapClient {
 	
 	function muestraFicha()
 	{
-		echo "<pre>";
-		print_r($this->resultados);
-		echo "</pre>";
+		$validacion = $this->validacion();
+		$ficha = '';
+		
+		// Atributos agrupados
+		$autores = array();
+		$titulos = array();
+		$pies_imprenta = array();
+		$descripciones = array();
+		$materias = array();
+		$autores_secundarios = array();
+		$isbn = '';
+		$clasificacion_dewey = '';
+		$notas = array();
+		$ligas_electronicas = array();
+		
+		if ($validacion["status"])
+		{
+			$etiquetas = $this->resultados['datos']['detalle']->etiquetas->etiqueta;
+			
+			if (count($etiquetas) == 0)
+			{
+				$ficha = "No existen datos para esta consulta";
+				return $ficha;		
+			} else {
+				
+				foreach ($etiquetas as $etq)
+				{
+					switch ($etq->etiqueta)
+					{
+						case 'Autor':
+							array_push($autores, $etq->texto);	
+							break;
+						case 'Título':
+							array_push($titulos, $etq->texto);
+							break;
+						case 'Pie de imprenta':
+							array_push($pies_imprenta, $etq->texto);
+							break;
+						case 'Descripción':
+							array_push($descripciones, $etq->texto);
+							break;
+						case 'Materia':
+							array_push($materias, $etq->texto);
+							break;
+						case 'Autor Secundario':
+							array_push($autores_secundarios, $etq->texto);
+							break;
+						case 'ISBN':
+							$isbn.= $etq->texto;
+							break;
+						case 'Clasificación DEWEY':
+							$clasificacion_dewey.= $etq->texto;
+							break; 			
+						case 'Nota general':
+							array_push($notas, $etq->texto);
+							break;
+						case 'Liga electrónica':
+							array_push($ligas_electronicas, $etq->texto);
+							break;					
+					}  // End switch
+				}  // End foreach
+				
+				return $ficha = array('autores' => $autores, 'titulos' => $titulos, 'pies_imprenta' => $pies_imprenta,
+						'descripciones' => $descripciones, 'materias' => $materias, 'autores_secundarios' => $autores_secundarios,
+						'isbn' => $isbn, 'clasificacion_dewey' => $clasificacion_dewey, 'notas' => $notas,
+						'ligas_electronicas' => $ligas_electronicas);
+			}
+
+		} else
+			return $validacion["mensaje"];
 	}
 	
 	function paginado()

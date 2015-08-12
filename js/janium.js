@@ -4,12 +4,12 @@ $(document).ready(function() {
 	   
 	   jQuery.ajax({
            success: function(html){
-              $('#detalle').html(html);
+              $('#detalle_' + numero_ficha).html(html);
            },
            fail: function(){
                $('#detalle').html('Hubo un error al cargar los datos, por favor intentalo de nuevo.');
            },
-           type: 'GET',
+           type: 'POST',
            url: 'detalle.php',
            cache: true,
            data: {ficha: numero_ficha}
