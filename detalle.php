@@ -18,7 +18,7 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		
 		echo "<table class='info'>";
 		
-		// Autor
+		// Autor y portada
 		if (!empty($ficha['autores']))
 		{
 			echo "<tr><td>";
@@ -27,11 +27,22 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		}
 		
 		// Ttitulo
-		if (!empty($ficha['titulos']))
+		if (!empty($ficha['titulos']) || !empty($ficha['portada_url']) || !empty($ficha['portada_url_asociada']))
 		{
 			echo "<tr><td>";
-			echo "<span class='identar'>".implode(" ; ", $ficha['titulos'])."</span>";
-			echo "</td></tr>";
+			echo "<span class='identar'>".implode(" ; ", $ficha['titulos'])."</span>";		
+			echo "</td>";
+				
+			echo "<td class='portada' rowspan='9'>";
+			if (!empty($ficha['portada_url']))
+				echo "<img src='".$ficha['portada_url']."' alt='portada' height='150px;' />";
+			if(!empty($ficha['portada_url_asociada']))
+				echo "<p><a href='".$ficha['portada_url_asociada']."' target='blank'>Ver en línea</a></p>";
+			else  // Por si no esta online
+				echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
+			
+			echo "</td>";
+			echo "</tr>";
 		}
 		
 		// Pie de imprenta
@@ -137,6 +148,9 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 			echo "</td></tr>";
 		}
 		
+		echo "<tr><td>";
+		echo "<a href='' id='ocultar_ficha_".$ficha['ficha']."'>Contraer ficha completa</a>";
+		echo "</td></tr>";
 		echo "</table>";
 		
 	} else  // No existen datos

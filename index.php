@@ -17,27 +17,37 @@
 //ini_set('display_errors', 1);
 
 require 'JaniumService.php';
+?>
 
-if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !empty($_GET['a']) && isset($_GET['v']) && !empty($_GET['v']))
+<form action="index.php" method="post">
+	Busqueda general: <input type="text" name="v"><br>
+	<input type="submit" value="Buscar">
+	<input type="hidden" name="metodo" value="RegistroBib/BuscarPorPalabraClaveGeneral">
+	<input type="hidden" name="a" value="terminos">
+</form>
+
+<?php
+
+if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) && !empty($_POST['a']) && isset($_POST['v']) && !empty($_POST['v']))
 {
-	if (isset($_GET['debug']) && $_GET['debug'] == '1')
+	if (isset($_POST['debug']) && $_POST['debug'] == '1')
 		$client = new JaniumService(true);
 	else
 		$client = new JaniumService();
 	
-	if (isset($_GET['numero_de_pagina']) && !empty($_GET['numero_de_pagina']))
-		$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v'], $_GET['numero_de_pagina']);
+	if (isset($_POST['numero_de_pagina']) && !empty($_POST['numero_de_pagina']))
+		$client->callWs($_POST['metodo'], $_POST['a'], $_POST['v'], $_POST['numero_de_pagina']);
 	else
-		$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v']);
+		$client->callWs($_POST['metodo'], $_POST['a'], $_POST['v']);
 	
 	$fichas = $client->iteraResultados();
 	
 	foreach ($fichas as $ficha)
 	{
 		echo "<div class='principal'>";
-		echo "<table class='info'>";
+		echo "<table class='info' id='tabla_".$ficha['ficha']."'>";
 		
-		if (!empty($ficha['fecha']) || !empty($ficha['portada_url']))
+		if (!empty($ficha['fecha']) || !empty($ficha['portada_url']) || !empty($ficha['portada_url_asociada']))
 		{
 			echo "<tr><td class='fecha'>";
 			echo $ficha['fecha'];
@@ -50,9 +60,8 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 				echo "<p><a href='".$ficha['portada_url_asociada']."' target='blank'>Ver en línea</a></p>";
 			else  // Por si es un libro
 				echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
-			echo "</td>";
 			
-			
+			echo "</td>";			
 			echo "</tr>";
 		}
 		
@@ -79,12 +88,13 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 		
 		echo "<tr><td>";
 		echo "<a href='' id='ficha_".$ficha['ficha']."'>Ver ficha completa</a>";
-		echo "<div id='detalle_".$ficha['ficha']."'>";
 		echo "</td></tr>";
 		//echo $ficha['ficha'];
 
 		
 		echo "</table>";
+		
+		echo "<div id='detalle_".$ficha['ficha']."'></div>";
 		echo "</div>";
 	}
 	
@@ -95,10 +105,7 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 	echo "</pre>";
 	*/
 	//echo $client->muestraFicha();
-} else
-	echo json_encode(array('status' => false, 'datos' => array()));
-
-
+}
 ?>
 
 </body>

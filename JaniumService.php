@@ -197,6 +197,12 @@ class JaniumService extends \SoapClient {
 		
 		if ($validacion["status"])
 		{
+			/*
+			echo "<pre>";
+			print_r($this->resultados['datos']);
+			echo "</pre>";
+			*/
+			
 			$etiquetas = $this->resultados['datos']['detalle']->etiquetas->etiqueta;
 			
 			if (count($etiquetas) == 0)
@@ -245,7 +251,10 @@ class JaniumService extends \SoapClient {
 				return $ficha = array('autores' => $autores, 'titulos' => $titulos, 'pies_imprenta' => $pies_imprenta,
 						'descripciones' => $descripciones, 'materias' => $materias, 'autores_secundarios' => $autores_secundarios,
 						'isbn' => $isbn, 'clasificacion_dewey' => $clasificacion_dewey, 'notas' => $notas,
-						'ligas_electronicas' => $ligas_electronicas);
+						'ligas_electronicas' => $ligas_electronicas, 'portada_url' => $this->resultados['datos']['detalle']->portada->url,
+						'portada_url_asociada' => $this->resultados['datos']['detalle']->portada->url_asociada, 
+						'url' => $this->resultados['datos']['url'], 'ficha' => $this->resultados['datos']['ficha']
+				);
 			}
 
 		} else
