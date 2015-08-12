@@ -30,6 +30,7 @@
 	<input type="submit" value="Buscar">
 	<input type="hidden" name="metodo" value="RegistroBib/BuscarPorPalabraClaveGeneral">
 	<input type="hidden" name="a" value="terminos">
+	<input type="hidden" name="inicio" value="1">
 </form>
 
 <?php

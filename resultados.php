@@ -14,6 +14,9 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 		$client->callWs($_POST['metodo'], $_POST['a'], $_POST['v']);
 
 	$fichas = $client->iteraResultados();
+	
+	if (isset($_POST['inicio']) && $_POST['inicio'] == '1' && !empty($fichas))
+		echo $fichas[0]['total_de_registros']." resultados";
 
 	foreach ($fichas as $ficha)
 	{

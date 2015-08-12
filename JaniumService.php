@@ -166,7 +166,8 @@ class JaniumService extends \SoapClient {
 				
 				// Empujandolo a $datos_array
 				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'fecha' => $fecha, 'titulos' => $titulos,
-				'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada));
+				'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada,
+				'total_de_registros' => $datos['total_de_registros']));
 			}
 			/*
 			echo "<pre>";
