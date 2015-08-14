@@ -23,12 +23,12 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 		echo "<div class='principal'>";
 		echo "<table class='info' id='tabla_".$ficha['ficha']."'>";
 
-		if (!empty($ficha['fecha']) || !empty($ficha['portada_url']) || !empty($ficha['portada_url_asociada']))
+		if (!empty($ficha['clasificaciones']) || !empty($ficha['portada_url']) || !empty($ficha['portada_url_asociada']))
 		{
-			echo "<tr><td class='fecha'>";
-			echo $ficha['fecha'];
+			echo "<tr><td align='left'>";
+			echo $ficha['clasificaciones'];
 			echo "</td>";
-				
+			
 			echo "<td class='portada' rowspan='4'>";
 			if (!empty($ficha['portada_url']))
 				echo "<img src='".$ficha['portada_url']."' alt='portada' height='150px;' />";
@@ -36,15 +36,15 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 				echo "<p><a href='".$ficha['portada_url_asociada']."' target='blank'>Ver en línea</a></p>";
 			else  // Por si es un libro
 				echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
-				
+			
 			echo "</td>";
 			echo "</tr>";
 		}
-
-		if (!empty($ficha['clasificaciones']))
+		
+		if (!empty($ficha['fecha']))
 		{
-			echo "<tr><td align='left'>";
-			echo $ficha['clasificaciones'];
+			echo "<tr><td class='fecha'>";
+			echo $ficha['fecha'];
 			echo "</td></tr>";
 		}
 
@@ -58,7 +58,11 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 		if (!empty($ficha['autores']))
 		{
 			echo "<tr><td>";
-			echo "<span class='identar'>".$ficha['autores']."</span>";
+			
+			if (!empty($ficha['titulos']))  // Para identar
+				echo "<span class='identar'>".$ficha['autores']."</span>";
+			else 
+				echo $ficha['autores'];
 			echo "</td></tr>";
 		}
 

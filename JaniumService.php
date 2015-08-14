@@ -119,6 +119,12 @@ class JaniumService extends \SoapClient {
 				
 			foreach ($datos['registros']->registro as $ficha)
 			{
+				/*
+				echo "<pre>";
+				print_r($ficha);
+				echo "</pre>";
+				*/ 
+				
 				// Parte de clasificaciones 
 				$clasificaciones = '';
 				
@@ -165,7 +171,7 @@ class JaniumService extends \SoapClient {
 				$portada_url_asociada = $ficha->portada->url_asociada;
 				
 				// Empujandolo a $datos_array
-				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'fecha' => $fecha, 'titulos' => $titulos,
+				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'titulos' => $titulos, 'fecha' => $fecha,
 				'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada,
 				'total_de_registros' => $datos['total_de_registros']));
 			}
