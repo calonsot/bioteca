@@ -189,7 +189,7 @@ class JaniumService extends \SoapClient {
 	function muestraFicha()
 	{
 		$validacion = $this->validacion();
-		$ficha = '';
+		$ficha = array();
 		
 		// Atributos agrupados
 		$autores = array();
@@ -210,7 +210,6 @@ class JaniumService extends \SoapClient {
 			print_r($this->resultados['datos']);
 			echo "</pre>";
 			*/
-			
 			$etiquetas = $this->resultados['datos']['detalle']->etiquetas->etiqueta;
 			
 			if (count($etiquetas) == 0)
@@ -221,48 +220,75 @@ class JaniumService extends \SoapClient {
 				
 				foreach ($etiquetas as $etq)
 				{
+					echo $etq->etiqueta;
 					switch ($etq->etiqueta)
 					{
 						case 'Autor':
-							array_push($autores, $etq->texto);	
+							if (!isset($ficha['autores']))
+								$ficha['autores'] = array();
+							array_push($ficha['autores'], $etq->texto);	
 							break;
 						case 'Título':
-							array_push($titulos, $etq->texto);
+							if (!isset($ficha['titulos']))
+								$ficha['titulos'] = array();
+							array_push($ficha['titulos'], $etq->texto);
 							break;
 						case 'Pie de imprenta':
-							array_push($pies_imprenta, $etq->texto);
+							if (!isset($ficha['Pie de imprenta']))
+								$ficha['Pie de imprenta'] = array();
+							array_push($ficha['Pie de imprenta'], $etq->texto);
 							break;
 						case 'Descripción':
-							array_push($descripciones, $etq->texto);
+							if (!isset($ficha['Descripción']))
+								$ficha['Descripción'] = array();
+							array_push($ficha['Descripción'], $etq->texto);
 							break;
 						case 'Materia':
-							array_push($materias, $etq->texto);
+							if (!isset($ficha['Materias']))
+								$ficha['Materias'] = array();
+							array_push($ficha['Materias'], $etq->texto);
 							break;
 						case 'Autor Secundario':
-							array_push($autores_secundarios, $etq->texto);
+							if (!isset($ficha['Autor secundario']))
+								$ficha['Autor secundario'] = array();
+							array_push($ficha['Autor secundario'], $etq->texto);
 							break;
 						case 'ISBN':
-							$isbn.= $etq->texto;
+							if (!isset($ficha['ISBN']))
+								$ficha['ISBN'] = array();
+							array_push($ficha['ISBN'], $etq->texto);
 							break;
 						case 'Clasificación DEWEY':
-							$clasificacion_dewey.= $etq->texto;
-							break; 			
+							if (!isset($ficha['Clasificación Dewey']))
+								$ficha['Clasificación Dewey'] = array();
+							array_push($ficha['Clasificación Dewey'], $etq->texto);
+							break;
 						case 'Nota general':
-							array_push($notas, $etq->texto);
+							if (!isset($ficha['Notas']))
+								$ficha['Notas'] = array();
+							array_push($ficha['Notas'], $etq->texto);
 							break;
 						case 'Liga electrónica':
-							array_push($ligas_electronicas, $etq->texto);
-							break;					
+							if (!isset($ficha['Liga electrónica']))
+								$ficha['Liga electrónica'] = array();
+							array_push($ficha['Liga electrónica'], $etq->texto);
+							break;	
+						default:
+							if (!isset($ficha[$etq->etiqueta]))
+								$ficha[$etq->etiqueta] = array();
+							array_push($ficha[$etq->etiqueta], $etq->texto);
+							break; 					
 					}  // End switch
 				}  // End foreach
 				
-				return $ficha = array('autores' => $autores, 'titulos' => $titulos, 'pies_imprenta' => $pies_imprenta,
-						'descripciones' => $descripciones, 'materias' => $materias, 'autores_secundarios' => $autores_secundarios,
-						'isbn' => $isbn, 'clasificacion_dewey' => $clasificacion_dewey, 'notas' => $notas,
-						'ligas_electronicas' => $ligas_electronicas, 'portada_url' => $this->resultados['datos']['detalle']->portada->url,
+				
+				 echo "<pre>";
+				 print_r($ficha);
+				 echo "</pre>";
+				
+				return array('datos_ficha' => $ficha, 'datos_generales' => array('portada_url' => $this->resultados['datos']['detalle']->portada->url,
 						'portada_url_asociada' => $this->resultados['datos']['detalle']->portada->url_asociada, 
-						'url' => $this->resultados['datos']['url'], 'ficha' => $this->resultados['datos']['ficha']
-				);
+						'url' => $this->resultados['datos']['url'], 'ficha' => $this->resultados['datos']['ficha']));
 			}
 
 		} else
