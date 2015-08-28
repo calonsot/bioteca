@@ -59,7 +59,7 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		}	
 		
 		echo "<tr><td>";
-		echo "<a href='' id='ocultar_ficha_".$ficha['ficha']."'>Contraer ficha completa</a>";
+		echo "<a href='' id='ocultar_ficha_".$datos_generales['ficha']."'>Contraer ficha completa</a>";
 		echo "</td></tr>";
 		echo "</table>";
 		
