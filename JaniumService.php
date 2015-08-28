@@ -220,7 +220,7 @@ class JaniumService extends \SoapClient {
 				
 				foreach ($etiquetas as $etq)
 				{
-					echo $etq->etiqueta;
+					//echo $etq->etiqueta;
 					switch ($etq->etiqueta)
 					{
 						case 'Autor':
@@ -281,11 +281,11 @@ class JaniumService extends \SoapClient {
 					}  // End switch
 				}  // End foreach
 				
-				
+				/*
 				 echo "<pre>";
 				 print_r($ficha);
 				 echo "</pre>";
-				
+				*/
 				return array('datos_ficha' => $ficha, 'datos_generales' => array('portada_url' => $this->resultados['datos']['detalle']->portada->url,
 						'portada_url_asociada' => $this->resultados['datos']['detalle']->portada->url_asociada, 
 						'url' => $this->resultados['datos']['url'], 'ficha' => $this->resultados['datos']['ficha']));

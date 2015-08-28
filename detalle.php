@@ -24,7 +24,7 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		echo "<table class='info'>";
 		
 		$con_negritas = array('Pie de imprenta', 'Descripción', 'Materias', 'Autor secundario', 'ISBN', 'ISSN', 'Clasificación Dewey', 
-				'Notas', 'Liga electrónica', 'Fechas de publicación y/o designación secuencial', 'Nota de forma física adicional disponible');  // Faltan EN:, Serie Sec., Clasificación local, Edición
+				'Notas', 'Liga electrónica', 'Fechas de publicación y/o designación secuencial', 'Nota de forma física adicional disponible');  // Faltan EN:, Serie Sec., Clasificación local, Edición, Autor Corporativo
 		
 		foreach ($datos_ficha as $etiqueta => $array_valores)
 		{
