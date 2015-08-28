@@ -30,12 +30,28 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 			echo "</td>";
 			
 			echo "<td class='portada' rowspan='4'>";
+			
 			if (!empty($ficha['portada_url']))
-				echo "<img src='".$ficha['portada_url']."' alt='portada' height='150px;' />";
+			{
+				if (strpos($ficha['portada_url'],'https://www.youtube.com') !== false)
+				{
+					$portada_url_array = explode(',', $ficha['portada_url']);
+					$portada_url_youtube = explode('|', $portada_url_array[1]);
+					$portada_url_youtube_limpio = str_replace("&hl=es_ES&fs=1%20", "", $portada_url_youtube[1]);
+					$portada_url_youtube_limpio = str_replace("&hl=es_ES&fs=1", "", $portada_url_youtube_limpio);
+					$portada_url_youtube_limpio = str_replace("/v/", "/embed/", $portada_url_youtube_limpio);
+					
+					?>
+					<iframe height="150" src="<?php echo $portada_url_youtube_limpio; ?>" allowfullscreen frameborder="0"></iframe>
+					<?php 
+				} else
+					echo "<img src='".$ficha['portada_url']."' alt='portada' height='150px;' />";
+			}	
+	
 			if(!empty($ficha['portada_url_asociada']))
 				echo "<p><a href='".$ficha['portada_url_asociada']."' target='blank'>Ver en línea</a></p>";
-			else  // Por si es un libro
-				echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
+			//else  // Por si es un libro
+				//echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
 			
 			echo "</td>";
 			echo "</tr>";

@@ -123,7 +123,7 @@ class JaniumService extends \SoapClient {
 				echo "<pre>";
 				print_r($ficha);
 				echo "</pre>";
-				*/ 
+				*/
 				
 				// Parte de clasificaciones 
 				$clasificaciones = '';
