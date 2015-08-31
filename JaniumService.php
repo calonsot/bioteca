@@ -25,6 +25,7 @@ class JaniumService extends \SoapClient {
 	public $client;
 	public $resultados;
 	public $valido = true;
+	public $datos_array = array();
 	
 	function __construct($debug = null, $ip = null) {
 		if (isset ( $debug ))
@@ -116,71 +117,26 @@ class JaniumService extends \SoapClient {
 		{
 			$datos = $this->resultados['datos'];
 			$datos_array = array();
-				
-			foreach ($datos['registros']->registro as $ficha)
-			{
-				/*
-				echo "<pre>";
-				print_r($ficha);
-				echo "</pre>";
-				*/
-				
-				// Parte de clasificaciones 
-				$clasificaciones = '';
-				
-				if (is_array($ficha->clasificaciones->clasificacion))
-				{
-					foreach ($ficha->clasificaciones->clasificacion as $clasificacion => $valor)
-						$clasificaciones.= $valor." ; ";
-					$clasificaciones = substr($clasificaciones, 0, -3);
-				} else
-					$clasificaciones.= $ficha->clasificaciones->clasificacion;
-					 
-				// Parte de fecha
-				$fecha = $ficha->fecha;
-				
-				// Parte de titulos
-				$titulos = '';
-				if (is_array($ficha->titulos->titulo))
-				{
-					foreach ($ficha->titulos->titulo as $titulo => $valor)
-						$titulos.= $valor." ; ";
-					$titulos = substr($titulos, 0, -3);
-				} else
-					$titulos.= $ficha->titulos->titulo;
-				
-				// Parte de autores
-				$autores = '';
-				
-				if (is_array($ficha->autores->autor))
-				{
-					foreach ($ficha->autores->autor as $autor => $valor)
-						$autores.= $valor." ; ";
-					$autores = substr($autores, 0, -3);
-				} else
-					$autores.= $ficha->autores->autor;
-				
-				// Parte de la URL
-				$url = $ficha->url;
-				
-				// Parte de numero de ficha
-				$ficha_no = $ficha->ficha;
-				
-				// Parte de portada
-				$portada_url = $ficha->portada->url;
-				$portada_url_asociada = $ficha->portada->url_asociada;
-				
-				// Empujandolo a $datos_array
-				array_push($datos_array, array('clasificaciones' => $clasificaciones, 'titulos' => $titulos, 'fecha' => $fecha,
-				'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada,
-				'total_de_registros' => $datos['total_de_registros']));
-			}
+			
 			/*
 			echo "<pre>";
-			print_r($this->resultados);
+			print_r($datos);
 			echo "</pre>";
 			*/
-			return $datos_array;
+			
+			$total_de_registros = (Int) $datos['total_de_registros'];
+			
+			if ($total_de_registros == 1)
+			{
+				$ficha = $datos['registros']->registro;
+				$this->iteraResultadosComun($ficha, $total_de_registros);
+				
+			} elseif ($total_de_registros > 1) {
+				foreach ($datos['registros']->registro as $ficha)
+					$this->iteraResultadosComun($ficha, $total_de_registros);
+			}
+			
+			return $this->datos_array;
 			
 		} else
 			echo $validacion["mensaje"];			
@@ -205,11 +161,11 @@ class JaniumService extends \SoapClient {
 		
 		if ($validacion["status"])
 		{
-			/*
+			
 			echo "<pre>";
 			print_r($this->resultados['datos']);
 			echo "</pre>";
-			*/
+			
 			$etiquetas = $this->resultados['datos']['detalle']->etiquetas->etiqueta;
 			
 			if (count($etiquetas) == 0)
@@ -293,6 +249,60 @@ class JaniumService extends \SoapClient {
 
 		} else
 			return $validacion["mensaje"];
+	}
+	
+	// Para no repetir codigo
+	function iteraResultadosComun($ficha, $total_de_registros)
+	{
+		// Parte de clasificaciones
+		$clasificaciones = '';
+		
+		if (is_array($ficha->clasificaciones->clasificacion))
+		{
+			foreach ($ficha->clasificaciones->clasificacion as $clasificacion => $valor)
+				$clasificaciones.= $valor." ; ";
+			$clasificaciones = substr($clasificaciones, 0, -3);
+		} else
+			$clasificaciones.= $ficha->clasificaciones->clasificacion;
+		
+		// Parte de fecha
+		$fecha = $ficha->fecha;
+		
+		// Parte de titulos
+		$titulos = '';
+		if (is_array($ficha->titulos->titulo))
+		{
+			foreach ($ficha->titulos->titulo as $titulo => $valor)
+				$titulos.= $valor." ; ";
+			$titulos = substr($titulos, 0, -3);
+		} else
+			$titulos.= $ficha->titulos->titulo;
+		
+		// Parte de autores
+		$autores = '';
+		
+		if (is_array($ficha->autores->autor))
+		{
+			foreach ($ficha->autores->autor as $autor => $valor)
+				$autores.= $valor." ; ";
+			$autores = substr($autores, 0, -3);
+		} else
+			$autores.= $ficha->autores->autor;
+		
+		// Parte de la URL
+		$url = $ficha->url;
+		
+		// Parte de numero de ficha
+		$ficha_no = $ficha->ficha;
+		
+		// Parte de portada
+		$portada_url = $ficha->portada->url;
+		$portada_url_asociada = $ficha->portada->url_asociada;
+		
+		// Empujandolo a $datos_array
+		array_push($this->datos_array, array('clasificaciones' => $clasificaciones, 'titulos' => $titulos, 'fecha' => $fecha,
+		'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada,
+		'total_de_registros' => $total_de_registros));
 	}
 	
 	function paginado()
