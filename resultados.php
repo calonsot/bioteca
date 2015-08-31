@@ -44,8 +44,12 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) &&
 					?>
 					<iframe height="150" src="<?php echo $portada_url_youtube_limpio; ?>" allowfullscreen frameborder="0"></iframe>
 					<?php 
-				} else
-					echo "<img src='".$ficha['portada_url']."' alt='portada' height='150px;' />";
+				} else {
+					$portada_url_limpio = str_replace("%20%20%20", "", $ficha['portada_url']);
+					$portada_url_limpio = str_replace("%20%20", "", $ficha['portada_url']);
+					$portada_url_limpio = str_replace("%20", "", $ficha['portada_url']);
+					echo "<img src='".$portada_url_limpio."' alt='portada' height='150px;' />";
+				}
 			}	
 	
 			if(!empty($ficha['portada_url_asociada']))
