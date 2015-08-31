@@ -161,11 +161,11 @@ class JaniumService extends \SoapClient {
 		
 		if ($validacion["status"])
 		{
-			
+			/*
 			echo "<pre>";
 			print_r($this->resultados['datos']);
 			echo "</pre>";
-			
+			*/
 			$etiquetas = $this->resultados['datos']['detalle']->etiquetas->etiqueta;
 			
 			if (count($etiquetas) == 0)
