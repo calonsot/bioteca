@@ -51,7 +51,7 @@ $(document).ready(function() {
 	                $('.animation_image').show(); //show loading image
 	                
 	                //load data from the server using a HTTP POST request
-	                $.post('resultados.php',{'metodo': 'RegistroBib/BuscarPorPalabraClaveGeneral', 'a': 'terminos', 'v': busqueda, 'numero_de_pagina': pagina.toString()}, function(data){
+	                $.get('resultados.php',{'metodo': 'RegistroBib/BuscarPorPalabraClaveGeneral', 'a': 'terminos', 'v': busqueda, 'numero_de_pagina': pagina.toString()}, function(data){
 	                      
 	                	if (data != "No existen datos para esta consulta")
 	                	{	
