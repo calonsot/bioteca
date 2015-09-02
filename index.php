@@ -12,7 +12,7 @@
 		<script type="text/javascript">
 			// Para el scrolling
 			pagina = 2;
-			busqueda = "<?php if (isset($_POST['v']))	echo $_POST['v'];	else	echo ''; ?>";
+			busqueda = "<?php if (isset($_GET['v']))	echo $_GET['v'];	else	echo ''; ?>";
 		</script>
 		
 		<script src="js/janium.js"></script>
@@ -25,7 +25,7 @@
 
 ?>
 
-<form action="index.php" method="post">
+<form action="index.php" method="get">
 	Busqueda general: <input type="text" name="v"><br>
 	<input type="submit" value="Buscar">
 	<input type="hidden" name="metodo" value="RegistroBib/BuscarPorPalabraClaveGeneral">
@@ -43,7 +43,6 @@ include 'resultados.php';
 <div class="animation_image" style="display:none" align="center">
 <img src="images/loading.gif">
 </div>
-
 	
 </body>
 </html>

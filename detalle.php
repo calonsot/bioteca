@@ -25,6 +25,7 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		
 		$con_negritas = array('Pie de imprenta', 'Descripción', 'Materias', 'Autor secundario', 'ISBN', 'ISSN', 'Clasificación Dewey', 
 				'Notas', 'Liga electrónica', 'Fechas de publicación y/o designación secuencial', 'Nota de forma física adicional disponible');  // Faltan EN:, Serie Sec., Clasificación local, Edición, Autor Corporativo
+		$ya_mostro_autor_secundario = false;
 		
 		foreach ($datos_ficha as $etiqueta => $array_valores)
 		{
@@ -42,7 +43,12 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 						echo "<li><a href='".$info_liga[0]."' target='blank'>".$info_liga[1]."</a></li>";
 					} else if ($etiqueta == 'Autor secundario')
 					{
-						echo implode(" ; ", $array_valores);
+						if (!$ya_mostro_autor_secundario)
+						{
+							$ya_mostro_autor_secundario = true;
+							echo implode(" ; ", $array_valores);
+						}
+						
 					} else	
 						echo "<li>".$valor."</li>";
 				}	

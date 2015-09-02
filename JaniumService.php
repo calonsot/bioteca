@@ -273,10 +273,10 @@ class JaniumService extends \SoapClient {
 		if (is_array($ficha->titulos->titulo))
 		{
 			foreach ($ficha->titulos->titulo as $titulo => $valor)
-				$titulos.= $valor." ; ";
+				$titulos.= $this->pone_corchetes($valor)." ; ";
 			$titulos = substr($titulos, 0, -3);
 		} else
-			$titulos.= $ficha->titulos->titulo;
+			$titulos.= $this->pone_corchetes($ficha->titulos->titulo);
 		
 		// Parte de autores
 		$autores = '';
@@ -303,6 +303,17 @@ class JaniumService extends \SoapClient {
 		array_push($this->datos_array, array('clasificaciones' => $clasificaciones, 'titulos' => $titulos, 'fecha' => $fecha,
 		'autores' => $autores, 'url' => $url, 'ficha' => $ficha_no, 'portada_url' => $portada_url, 'portada_url_asociada' => $portada_url_asociada,
 		'total_de_registros' => $total_de_registros));
+	}
+	
+	function pone_corchetes($titulo)
+	{
+		$con_corchetes = array("Artículo", "Videograbación", "Cartel", "Fotografías", "Publicación periódica");
+		$valor_separado = explode(" ", $titulo);
+		
+		if (in_array(end($valor_separado), $con_corchetes))
+			return str_replace(end($valor_separado), "[".end($valor_separado)."]", $titulo);	 
+		else
+			return $titulo;
 	}
 	
 	function paginado()

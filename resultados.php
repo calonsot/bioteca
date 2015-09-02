@@ -1,22 +1,22 @@
 <?php
 require 'JaniumService.php';
 
-if (isset($_POST['metodo']) && !empty($_POST['metodo']) && isset($_POST['a']) && !empty($_POST['a']) && isset($_POST['v']) && !empty($_POST['v']))
+if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !empty($_GET['a']) && isset($_GET['v']) && !empty($_GET['v']))
 {
-	if (isset($_POST['debug']) && $_POST['debug'] == '1')
+	if (isset($_GET['debug']) && $_GET['debug'] == '1')
 		$client = new JaniumService(true);
 	else
 		$client = new JaniumService();
 
-	if (isset($_POST['numero_de_pagina']) && !empty($_POST['numero_de_pagina']))
-		$client->callWs($_POST['metodo'], $_POST['a'], $_POST['v'], $_POST['numero_de_pagina']);
+	if (isset($_GET['numero_de_pagina']) && !empty($_GET['numero_de_pagina']))
+		$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v'], $_GET['numero_de_pagina']);
 	else
-		$client->callWs($_POST['metodo'], $_POST['a'], $_POST['v']);
+		$client->callWs($_GET['metodo'], $_GET['a'], $_GET['v']);
 
 	$fichas = $client->iteraResultados();
 	
-	if (isset($_POST['inicio']) && $_POST['inicio'] == '1' && !empty($fichas))
-		echo $fichas[0]['total_de_registros']." resultados";
+	if (isset($_GET['inicio']) && $_GET['inicio'] == '1' && !empty($fichas))
+		echo $fichas[0]['total_de_registros']." resultados para la búsqueda \"".$_GET['v']."\"";
 
 	foreach ($fichas as $ficha)
 	{
