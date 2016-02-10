@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* desktop.css */
+
+@media screen and (min-width:1024px)
+{
+#wrapper {
+	width:930px;
+	padding:0px 40px;
+	margin:0px auto;
+}
+
+#header {
+	width:100%;
+	text-align:right;
+	}
+
+#header .conoce {
+	float:right;
+	}
+#header .conoce2 {
+	float:right;
+	display:none;
+	}
+#menu-mobile, #menu-mobile-head {
+	display: none;
+	}
+	
+#ima {
+	width:613px;
+	height:301px;
+	padding:0px;
+	/*float:right;*/
+	}
+
+#content {
+	width:830px;
+	padding:20px 50px 50px 50px;
+	}
+#content h1 {
+	font-size:20px;
+	padding: 5px 0px 5px 0px;
+	}
+#content h2 {
+	font-size:14px;
+	/*padding: 10px 0px 0px 0px;*/
+	}
+#content h3 {
+	font-size:13px;
+	padding: 10px 0px 0px 0px;
+	}
+.izq {
+	width:320px;
+	float:left;
+	margin:20px 20px 20px 0px;
+	}
+	
+.der {
+	width: 320px;
+	float: right;
+	margin: 20px 0px 20px 20px;
+	}
+.cen {
+	float: left;
+	width: 31%;
+	margin: 10px 0px 20px 0px;
+	}
+	
+.cen1 {
+	float: center;
+	width: 70%;
+	margin: 0px auto;
+	}
+
+#grafica {
+	display: ;
+	}
+#graficam {
+	display: none;
+	}
+	
+#content p {
+	font-size:13px;
+	line-height:150%;
+	}
+
+#content ul {
+	font-size:12px;
+	line-height:150%;
+	}
+#content ol {
+	font-size:12px;
+	line-height:150%;
+	}
+#content table {
+	font-size:12px;
+	line-height:150%;
+	}
+#content .cuadro {
+	font-size:11px;
+	text-align:center;
+	}
+.frase {
+	margin:-2em 0 1em 0;
+	}
+	
+.columnas {
+  	columns: 3;
+	-o-columns: 3;
+	-ms-columns: 3;
+	-moz-columns: 3;
+	-khtml-columns: 3;
+	-webkit-columns: 3;
+	}
+
+#footer {
+	padding:10px 0px 10px 0px;
+	}
+}

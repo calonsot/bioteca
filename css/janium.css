@@ -1,23 +1,21 @@
 @CHARSET "UTF-8";
 
 .principal {
-	background-color: #F0FFFF;
-	width: 50%;
-	margin: 20px auto;
+	/*background-color: rgb(219, 216, 196);*/
+	width: 100%;
+	margin: 15px auto;
 }
 
 .info {
-	background-color: #F0FFFF;
+	/*background-color: #F0FFFF;*/
+	/*border-style: double;*/
 	width: 100%;
-	border-style: double;
-	border-width: 2px;
-	border-color: black;
+	padding-left: 10px;
 }
 
 .portada {
-	background-color: #F0FFFF;
-	width: 30%;
-	text-align: center;
+	/*background-color: #F0FFFF;*/
+	text-align: right;
 }
 
 .identar {
@@ -32,11 +30,44 @@
 
 ul {
    list-style: none;
-   margin-left: 0;
+   margin: 0;
+   margin-top: 2px;
+   margin-bottom: 2px;
    padding-left: 1em;
-   text-indent: -1em;
+   /*text-indent: -1em;*/
 }
 
 p { 
 	margin:0; 
+}
+
+input[id="busqueda"] {
+	width: 300px;
+	height: 37px;
+	padding: 0px 13px 0px 13px;
+	background: #e8e6d8;
+	border: solid 1px #3a8fac;
+	border-radius: 7px;
+	color: #2A4B57;
+	box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-o-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-ms-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+}
+
+#boton {
+	padding: 6px 19px;
+	text-decoration: none;
+	background: #BFC6BE;
+	border: solid 1px #3a8fac;
+	border-radius: 7px;
+	color: #2A4B57;
+	font-weight: bold;
+	box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-o-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	-ms-box-shadow: 0px 0px 6px -1px rgba(0,0,0,0.75), inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+	margin: 15px;
 }

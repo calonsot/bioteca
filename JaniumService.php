@@ -14,7 +14,7 @@ class JaniumRequestArg {
 		$this->v = $v;
 	}
 }
-class JaniumService extends \SoapClient {
+class JaniumService extends SoapClient {
 	
 	/**
 	 * Para mostrar errores o no

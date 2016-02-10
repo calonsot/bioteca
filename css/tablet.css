@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* tablet.css */
+
+@media screen and (max-width:1023px) and (min-width:481px)
+{
+/* wrapper 600px / Tablets: 700px - 500px */
+#wrapper {
+	width:80%;
+	padding:0px 5%;
+	margin:0px auto;
+}
+
+#header {
+	text-align:right;
+	}
+
+#header img{
+	width:50%;
+	height:auto;
+	float:left;
+	}
+#header .conoce {
+	display:none;
+	}
+#header .conoce2 {
+	}
+#menu {
+	display: none;
+}
+
+#submenu {
+	
+	}
+	
+#ima {
+	width:100%;
+	height:auto;
+	padding:0px;
+	float:right;
+	}
+#ima img{
+	width:100%;
+	}
+
+#content {
+	width:90%;
+	padding:5%;
+	}
+.izq {
+	width:40%;
+	/*height:auto;*/
+	float:left;
+	margin:3% 3% 3% 0;
+	}
+	
+.der {
+	width:40%;
+	/*height:auto;*/
+	float: right;
+	margin:3% 0 3% 3%;
+	}
+.cen {
+	float: left;
+	width: 30%;
+	margin: 3% 0 3% 0;
+	}
+.cen1 {
+	float: center;
+	width: 70%;
+	margin: 0px auto;
+	}
+#grafica {
+	display: none;
+	}
+#graficam {
+	display: ;
+	}
+	
+		
+#content h1 {
+	font-size:1em;
+	padding:2% 0% 1% 0%;
+	}
+#content h2 {
+	font-size:0.9em;
+	/*padding:2% 0% 0% 0%;*/
+	}
+#content h3 {
+	font-size:0.8em;
+	padding:2% 0% 0% 0%;
+	}
+#content p {
+	font-size:0.8em;
+	}
+
+#content ul {
+	font-size:.8em;
+	line-height:150%;
+	}
+#content ul li ul {
+	font-size:.9em;
+	line-height:150%;
+	}
+#content ol {
+	font-size:.8em;
+	line-height:150%;
+	}
+#content table {
+	font-size:.7em;
+	line-height:150%;
+	}
+.frase {
+	margin:0em 0 1em 0;
+	}
+	
+.columnas {
+  	columns: 2;
+	-o-columns: 2;
+	-ms-columns: 2;
+	-moz-columns: 2;
+	-khtml-columns: 2;
+	-webkit-columns: 2;
+	}
+
+#footer {
+	padding:1% 0% 1% 0%;
+	}
+#footer img {
+	width:100%;
+	height:auto;
+	}
+}

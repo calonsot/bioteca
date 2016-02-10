@@ -16,21 +16,20 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 	$fichas = $client->iteraResultados();
 	
 	if (isset($_GET['inicio']) && $_GET['inicio'] == '1' && !empty($fichas))
-		echo $fichas[0]['total_de_registros']." resultados para la búsqueda \"".$_GET['v']."\"";
+		echo "<div align='right' class='tit'>".$fichas[0]['total_de_registros']." resultado(s) para la búsqueda \"".$_GET['v']."\""."</div>";
 
 	foreach ($fichas as $ficha)
 	{
-		echo "<div class='principal'>";
-		echo "<table class='info' id='tabla_".$ficha['ficha']."'>";
+		echo "<div class='drop-shadow raised principal'>"; // Inicia div con resultado
+		echo "<table class='info' id='tabla_".$ficha['ficha']."'>"; // Inicia tabla 
 
 		if (!empty($ficha['clasificaciones']) || !empty($ficha['portada_url']) || !empty($ficha['portada_url_asociada']))
 		{
-			echo "<tr><td align='left'>";
+			echo "<tr><td align='left' width=60%'>";
 			echo $ficha['clasificaciones'];
 			echo "</td>";
 			
-			echo "<td class='portada' rowspan='4'>";
-			
+			echo "<td width='40%' class='portada' rowspan='4'>";
 			if (!empty($ficha['portada_url']))
 			{
 				if (strpos($ficha['portada_url'],'https://www.youtube.com') !== false)
@@ -53,8 +52,8 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 			}	
 	
 			if(!empty($ficha['portada_url_asociada']))
-				echo "<p><a href='".$ficha['portada_url_asociada']."' target='blank'>Ver en línea</a></p>";
-			//else  // Por si es un libro
+				echo "<span id='submenu'><img src='images/1_ic_ver.png' width='23' height='17'/><a href='".$ficha['portada_url_asociada']."' target='blank' class='nb'>Ver en línea</a></span>";
+			     //else  // Por si es un libro
 				//echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
 			
 			echo "</td>";
@@ -71,7 +70,7 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 		if (!empty($ficha['titulos']))
 		{
 			echo "<tr><td align='left'>";
-			echo "<strong>".$ficha['titulos']."</strong>";
+			echo "<h2>".$ficha['titulos']."</h2>";
 			echo "</td></tr>";
 		}
 
@@ -87,7 +86,7 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 		}
 
 		echo "<tr><td>";
-		echo "<a href='' id='ficha_".$ficha['ficha']."'>Ver ficha completa</a>";
+		echo "<span id='submenu'><a href='' id='ficha_".$ficha['ficha']."' class='nb'>Ver ficha completa</a></span>";
 		echo "</td></tr>";
 		//echo $ficha['ficha'];
 
