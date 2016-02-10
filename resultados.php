@@ -53,6 +53,8 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 	
 			if(!empty($ficha['portada_url_asociada']))
 				echo "<span id='submenu'><img src='images/1_ic_ver.png' width='23' height='17'/><a href='".$ficha['portada_url_asociada']."' target='blank' class='nb'>Ver en línea</a></span>";
+			
+			//echo "AAA";
 			     //else  // Por si es un libro
 				//echo "<p><a href='".$ficha['url']."' target='blank'>Ver disponibilidad</a></p>";
 			
@@ -92,7 +94,7 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 
 
 		echo "</table>";
-
+		
 		echo "<div id='detalle_".$ficha['ficha']."'></div>";
 		echo "</div>";
 	}
