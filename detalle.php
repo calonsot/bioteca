@@ -24,7 +24,8 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 		
 		$con_negritas = array('Pie de imprenta', 'Descripción', 'Materias', 'Autor secundario', 'ISBN', 'ISSN', 'Clasificación Dewey', 
 				'Notas', 'Liga electrónica', 'Fechas de publicación y/o designación secuencial', 'Nota de forma física adicional disponible',
-				'Serie', 'Serie Sec.'
+				'Serie', 'Serie Sec.', 'Nombre', 'Método de codificación para la coordenada plana', 'Nota de con', 'Nota de tesis', 
+				'Nota de Resumen', 'Bibliografía', 'Clasificación local', 'Escala'
 		);  // Faltan EN:, Serie Sec., Clasificación local, Edición, Autor Corporativo
 		$ya_mostro_autor_secundario = false;
 		$primer_valor = true;

@@ -101,7 +101,8 @@
     </div><!-- menu mobile ENDS-->
     <div id="menu">
       <a href="index.php?v=audios&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Audios</a>
-       <a href="index.php?v=articulo&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Biodiversitas</a>
+       <a href="index.php?v=articulo&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Biodiversitas por artículo</a>
+       <a href="index.php?v=edicionxnumero&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Biodiversitas por numero</a>
       <a href="index.php?v=carteles&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Carteles</a>
       <a href="index.php?v=exposicion&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Exposiciones</a>
       <a href="index.php?v=videos&metodo=RegistroBib%2FBuscarPorPalabraClaveGeneral&a=terminos&inicio=1">Videos</a>
