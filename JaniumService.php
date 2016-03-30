@@ -226,6 +226,7 @@ class JaniumService extends SoapClient {
 							array_push($ficha['Notas'], $etq->texto);
 							break;
 						case 'Liga electrónica':
+						case 'Liga electronica':
 							if (!isset($ficha['Liga electrónica']))
 								$ficha['Liga electrónica'] = array();
 							array_push($ficha['Liga electrónica'], $etq->texto);
@@ -327,5 +328,14 @@ class JaniumService extends SoapClient {
 			
 		if ($residuo > 0)
 			$paginas+=1;
+	}
+	
+	function make_clickable($text) 
+	{
+		$regex = '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#';
+		$texto = preg_replace($regex, ${1}, $text);
+		$url = str_replace($texto, "", $text);
+		
+		return "<a href='{$url}' target='blank'>".$texto."</a>";
 	}
 }

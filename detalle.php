@@ -41,10 +41,9 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 				foreach ($array_valores as $valor)
 				{
 					if ($etiqueta == 'Liga electrónica')
-					{
-						$info_liga = explode(" ", $valor, 2);
-						echo "<li><a href='".$info_liga[0]."' target='blank'>".$info_liga[1]."</a></li>";
-					} else if ($etiqueta == 'Autor secundario')
+						echo "<li>".$client->make_clickable($valor)."</li>";
+					
+					else if ($etiqueta == 'Autor secundario')
 					{
 						if (!$ya_mostro_autor_secundario)
 						{
