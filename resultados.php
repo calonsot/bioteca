@@ -103,6 +103,6 @@ if (isset($_GET['metodo']) && !empty($_GET['metodo']) && isset($_GET['a']) && !e
 	 echo "<pre>";
 	 print_r($fichas);
 	 echo "</pre>";
-	 */
-	//echo $client->muestraFicha();
+	 
+	echo $client->muestraFicha();*/
 }

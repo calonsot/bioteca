@@ -56,20 +56,6 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 				}	
 		
 				echo "</ul>";
-				
-				// Para que divida el tr y poner solo en la primera el codigo QR
-				if ($primer_valor)
-				{	
-					$portada_url_limpio = str_replace("%20%20%20", "", $datos_generales['portada_url']);
-					$portada_url_limpio = str_replace("%20%20", "", $datos_generales['portada_url']);
-					$portada_url_limpio = str_replace("%20", "", $datos_generales['portada_url']);
-					echo "<img src='".$portada_url_limpio."' alt='portada' height='150px;' />";
-					
-					if(!empty($datos_generales['portada_url_asociada']))
-						echo "<span id='submenu'><img src='images/1_ic_ver.png' width='23' height='17'/><a href='".$datos_generales['portada_url_asociada']."' target='blank' class='nb'>Ver en línea</a></span>";
-					
-					$primer_valor = false;
-				}
 					
 				echo "</td>";
 				echo "</tr>";
@@ -98,6 +84,26 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 				echo "</td></tr>";
 			}					
 		}	
+		
+		
+		// Para saber si es exposicion y ponerle el correo de contacto
+		if (isset($datos_ficha['Materias']) && count($datos_ficha['Materias']) > 0 && strpos(strtolower($datos_ficha['Materias'][0]), 'exposición') !== false)
+		{
+			echo "<tr><td>";
+			echo "<strong>Si te interesa esta exposición en préstamo contáctanos a bancoima@xolo.conabio.gob.mx</strong>";
+			echo "</td></tr>";
+			
+		} elseif (isset($datos_ficha['Nota de Resumen']) && count($datos_ficha['Nota de Resumen']) > 0 && strpos(strtolower($datos_ficha['Nota de Resumen'][0]), 'exposición') !== false) {
+			echo "<tr><td>";
+			echo "<strong>Si te interesa esta exposición en préstamo contáctanos a bancoima@xolo.conabio.gob.mx</strong>";
+			echo "</td></tr>";
+
+		} elseif (isset($datos_ficha['Notas']) && count($datos_ficha['Notas']) > 0 && strpos(strtolower($datos_ficha['Notas'][0]), 'exposición') !== false) {
+			echo "<tr><td>";
+			echo "<strong>Si te interesa esta exposición en préstamo contáctanos a bancoima@xolo.conabio.gob.mx</strong>";
+			echo "</td></tr>";
+		} 			
+		
 		
 		echo "<tr><td>";
 		echo "<span id='submenu'><a href='' id='ocultar_ficha_".$datos_generales['ficha']."' class='nb'>Contraer ficha completa</a></span>";
