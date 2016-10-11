@@ -1,6 +1,5 @@
 <?php
 
-include('phpqrcode/qrlib.php');
 require 'JaniumService.php';
 
 if (isset($_POST['ficha']) && !empty($_POST['ficha']))
@@ -60,11 +59,15 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 				
 				// Para que divida el tr y poner solo en la primera el codigo QR
 				if ($primer_valor)
-				{
-					echo "</td>";
-					echo "<td width='40%' class='portada' rowspan='4'>";
-					QRcode::png($datos_generales['url'], 'qrcodes/'.$datos_generales['ficha'].'.png', null, 6, 1, true);
-					echo "<img src='qrcodes/".$datos_generales['ficha'].".png' />";
+				{	
+					$portada_url_limpio = str_replace("%20%20%20", "", $datos_generales['portada_url']);
+					$portada_url_limpio = str_replace("%20%20", "", $datos_generales['portada_url']);
+					$portada_url_limpio = str_replace("%20", "", $datos_generales['portada_url']);
+					echo "<img src='".$portada_url_limpio."' alt='portada' height='150px;' />";
+					
+					if(!empty($datos_generales['portada_url_asociada']))
+						echo "<span id='submenu'><img src='images/1_ic_ver.png' width='23' height='17'/><a href='".$datos_generales['portada_url_asociada']."' target='blank' class='nb'>Ver en línea</a></span>";
+					
 					$primer_valor = false;
 				}
 					
@@ -73,7 +76,7 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 			
 			} else {
 				echo "<tr><td>";
-				foreach ($array_valores as $valor)
+				foreach ($array_valores as $valor)	
 					echo "<h2>".$valor."</h2>";
 				
 				// Para que divida el tr y poner solo en la primera el codigo QR
@@ -81,8 +84,14 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 				{
 					echo "</td>";
 					echo "<td width='40%' class='portada' rowspan='4'>";
-					QRcode::png($datos_generales['url'], 'qrcodes/'.$datos_generales['ficha'].'.png', null, 4, 1, true);
-					echo "<img src='qrcodes/".$datos_generales['ficha'].".png' />";
+					$portada_url_limpio = str_replace("%20%20%20", "", $datos_generales['portada_url']);
+					$portada_url_limpio = str_replace("%20%20", "", $datos_generales['portada_url']);
+					$portada_url_limpio = str_replace("%20", "", $datos_generales['portada_url']);
+					echo "<img src='".$portada_url_limpio."' alt='portada' height='150px;' />";
+					
+					if(!empty($datos_generales['portada_url_asociada']))
+						echo "<span id='submenu'><img src='images/1_ic_ver.png' width='23' height='17'/><a href='".$datos_generales['portada_url_asociada']."' target='blank' class='nb'>Ver en línea</a></span>";
+					
 					$primer_valor = false;
 				}
 				
