@@ -22,7 +22,29 @@
     $('#menu-mobile-head').click(function(){
       $('#menu-mobile a').slideToggle(400);
     });
+
+
+    // Para saber si ya viene de un valor en los menus preestablecidos
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+	var busqueda = getUrlParameter('v');
+
+    if (busqueda != "") $('#busqueda').val(busqueda);    
   });
+  
     $(function () {
       $("#slider4").responsiveSlides({
         auto: true,
@@ -139,11 +161,12 @@
 	
 <span class="tit">Catálogo general</span>
 <form action="index.php" method="get">
-  <input type="text" name="v" id="busqueda"> 
+  	<input type="text" name="v" id="busqueda"> 
     <input type="submit" value="Buscar" id="boton">
     <input type="hidden" name="metodo" value="RegistroBib/BuscarPorPalabraClaveGeneral">
     <input type="hidden" name="a" value="terminos">
     <input type="hidden" name="inicio" value="1">
+    <br /><span><small><small>Ojo: Puedes realizar busquedas más especificas con el símbolo "+" entre dos palabras clave, ej. "carteles+peces" </small></small></span>
 </form>
 
   <?php
