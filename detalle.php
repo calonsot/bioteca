@@ -104,6 +104,14 @@ if (isset($_POST['ficha']) && !empty($_POST['ficha']))
 			echo "</td></tr>";
 		} 			
 		
+		// Para compartir en correo, facebook y twitter
+		echo "<tr><td>";
+		echo "<a name='em_share' type='button' href='mailto:".$datos_generales['portada_url_asociada']."' target='_blank'><img src='images/compartir/email.png' /></a>";
+		echo "<a name='tw_share' type='button' href='https://twitter.com/intent/tweet?url=".$datos_generales['portada_url_asociada']."&text=' target='_blank'><img src='images/compartir/twitter.png' /></a>";
+		echo "<a name='fb_share' type='button' href='https://www.facebook.com/sharer.php?u=".$datos_generales['portada_url_asociada']."&t=Bioteca de CONABIO' target='_blank'><img src='images/compartir/facebook.png' /></a>";
+		
+		
+		echo "</td></tr>";
 		
 		echo "<tr><td>";
 		echo "<span id='submenu'><a href='' id='ocultar_ficha_".$datos_generales['ficha']."' class='nb'>Contraer ficha completa</a></span>";

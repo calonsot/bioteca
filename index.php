@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="css/demo.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/responsiveslides.min.js"></script>
+
 <script>
   $(document).ready(function(){
     $('#menu-mobile-head').click(function(){
